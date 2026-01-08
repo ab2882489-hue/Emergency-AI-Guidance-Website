@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergency AI Guidance - Emergency Input</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="emergency-mode">
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <a href="./index.html" class="logo">
+                <i class="fas fa-ambulance"></i>
+                <span>Emergency AI</span>
+            </a>
+            
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <ul class="nav-links">
+                <li><a href="./index.html"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="./emergency.html" class="active"><i class="fas fa-plus-circle"></i> Start Emergency</a></li>
+                <li><a href="./learn.html"><i class="fas fa-book-medical"></i> Learn First Aid</a></li>
+                <li><a href="./nearby.html"><i class="fas fa-hospital"></i> Nearby Hospitals</a></li>
+                <li><a href="./about.html"><i class="fas fa-info-circle"></i> About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <div class="emergency-alert">
+                <i class="fas fa-exclamation-triangle"></i> EMERGENCY MODE ACTIVE - Speak or describe the emergency situation
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-microphone"></i>
+                    <h1>Describe the Emergency</h1>
+                </div>
+                
+                <p class="mb-3">Please describe what happened or the symptoms you're observing. Speak clearly or type below.</p>
+                
+                <!-- Language Selection -->
+                <div class="input-group mb-3">
+                    <label for="language"><i class="fas fa-language"></i> Select Language</label>
+                    <select id="language" class="language-select">
+                        <option value="en-US">English (US)</option>
+                        <option value="es-ES">Spanish</option>
+                        <option value="fr-FR">French</option>
+                        <option value="de-DE">German</option>
+                        <option value="zh-CN">Chinese</option>
+                    </select>
+                </div>
+                
+                <!-- Voice Input -->
+                <div class="voice-input">
+                    <button id="voiceBtn" class="voice-btn">
+                        <i class="fas fa-microphone"></i>
+                    </button>
+                    <input type="text" id="voiceInput" placeholder="Click microphone and describe the emergency..." class="input-group" readonly>
+                </div>
+                
+                <div class="text-center mb-3">
+                    <p>or</p>
+                </div>
+                
+                <!-- Text Input -->
+                <div class="input-group mb-4">
+                    <label for="emergencyText"><i class="fas fa-keyboard"></i> Type Emergency Description</label>
+                    <textarea id="emergencyText" rows="4" placeholder="Example: Person is choking and cannot breathe. They are conscious but cannot speak."></textarea>
+                </div>
+                
+                <!-- Action Buttons -->
+                <div class="action-buttons" style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <button id="analyzeBtn" class="btn btn-primary btn-large">
+                        <i class="fas fa-search"></i> Analyze & Get Guidance
+                    </button>
+                    
+                    <a href="./severe.html" class="btn btn-secondary">
+                        <i class="fas fa-phone-alt"></i> Severe Emergency - Call Now
+                    </a>
+                    
+                    <a href="./guidance.html" class="btn btn-secondary">
+                        <i class="fas fa-list-ol"></i> View Step-by-Step Guides
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Results -->
+            <div id="results" class="card hidden">
+                <div class="card-header">
+                    <i class="fas fa-diagnoses"></i>
+                    <h2>AI Analysis Results</h2>
+                </div>
+                
+                <div id="analysisContent">
+                    <!-- Results will be populated here by JavaScript -->
+                </div>
+                
+                <div class="mt-4">
+                    <a href="./guidance.html" id="guidanceBtn" class="btn btn-primary btn-full btn-large">
+                        <i class="fas fa-play-circle"></i> Start Voice-Guided Instructions
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Emergency AI Guidance</h3>
+                    <p>AI-powered emergency assistance for critical situations. Always call local emergency services in life-threatening situations.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Emergency Contacts</h3>
+                    <ul>
+                        <li>Police: 911</li>
+                        <li>Fire Department: 911</li>
+                        <li>Ambulance: 911</li>
+                        <li>Poison Control: 1-800-222-1222</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>© 2023 Emergency AI Guidance. This is a demonstration tool only. In real emergencies, always call your local emergency number.</p>
+                <p class="mt-1"><a href="./about.html">Disclaimer & Privacy Policy</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="./js/main.js"></script>
+    <script src="./js/voice.js"></script>
+    <script src="./js/ai-logic.js"></script>
+    <script src="./js/emergency-detection.js"></script>
+    <script>
+        // Initialize emergency page
+        document.addEventListener('DOMContentLoaded', function() {
+            const voiceBtn = document.getElementById('voiceBtn');
+            const voiceInput = document.getElementById('voiceInput');
+            const emergencyText = document.getElementById('emergencyText');
+            const analyzeBtn = document.getElementById('analyzeBtn');
+            const resultsDiv = document.getElementById('results');
+            const analysisContent = document.getElementById('analysisContent');
+            const guidanceBtn = document.getElementById('guidanceBtn');
+            const languageSelect = document.getElementById('language');
+            
+            let isListening = false;
+            
+            // Set up voice recognition
+            voiceAssistant.onResult = function(transcript) {
+                voiceInput.value = transcript;
+                emergencyText.value = transcript;
+                
+                // Auto-analyze after voice input
+                setTimeout(() => {
+                    analyzeEmergency();
+                }, 500);
+            };
+            
+            voiceAssistant.onError = function(error) {
+                console.error('Voice recognition error:', error);
+                alert('Voice recognition failed. Please type the emergency description.');
+            };
+            
+            // Voice button click handler
+            voiceBtn.addEventListener('click', function() {
+                if (!isListening) {
+                    if (voiceAssistant.startListening()) {
+                        voiceBtn.classList.add('listening');
+                        voiceBtn.innerHTML = '<i class="fas fa-stop"></i>';
+                        isListening = true;
+                        voiceInput.placeholder = "Listening... Speak now";
+                    }
+                } else {
+                    voiceAssistant.stopListening();
+                    voiceBtn.classList.remove('listening');
+                    voiceBtn.innerHTML = '<i class="fas fa-microphone"></i>';
+                    isListening = false;
+                    voiceInput.placeholder = "Click microphone and describe the emergency...";
+                }
+            });
+            
+            // Language change handler
+            languageSelect.addEventListener('change', function() {
+                voiceAssistant.setLanguage(this.value);
+            });
+            
+            // Analyze button handler
+            analyzeBtn.addEventListener('click', analyzeEmergency);
+            
+            function analyzeEmergency() {
+                const text = emergencyText.value.trim();
+                
+                if (!text) {
+                    alert('Please describe the emergency situation first.');
+                    return;
+                }
+                
+                // Analyze with AI
+                const analysis = aiGuidance.analyzeEmergency(text);
+                
+                // Detect severity
+                const severity = emergencyDetector.detectSeverity(text);
+                
+                // Display results
+                let severityColor = '#10b981'; // green for low
+                let severityText = 'Low';
+                
+                if (severity === 'high') {
+                    severityColor = '#dc2626';
+                    severityText = 'High';
+                } else if (severity === 'medium') {
+                    severityColor = '#f59e0b';
+                    severityText = 'Medium';
+                }
+                
+                analysisContent.innerHTML = `
+                    <div class="severity-indicator" style="display: flex; align-items: center; margin-bottom: 1.5rem; padding: 1rem; background-color: #f3f4f6; border-radius: 8px;">
+                        <div style="width: 20px; height: 20px; border-radius: 50%; background-color: ${severityColor}; margin-right: 1rem;"></div>
+                        <div>
+                            <h3 style="margin-bottom: 0.25rem;">Detected Emergency: ${analysis.type.toUpperCase()}</h3>
+                            <p style="margin-bottom: 0;"><strong>Severity Level:</strong> <span style="color: ${severityColor};">${severityText}</span></p>
+                        </div>
+                    </div>
+                    
+                    <h3>Recommended Actions:</h3>
+                    <ul style="padding-left: 1.5rem; margin-bottom: 1.5rem;">
+                        ${analysis.steps.slice(0, 3).map(step => `<li>${step.instructions}</li>`).join('')}
+                    </ul>
+                    
+                    ${severity === 'high' ? 
+                        '<div class="emergency-alert"><i class="fas fa-exclamation-triangle"></i> HIGH SEVERITY DETECTED - Consider calling emergency services immediately</div>' : 
+                        ''}
+                `;
+                
+                // Show results
+                resultsDiv.classList.remove('hidden');
+                
+                // Scroll to results
+                resultsDiv.scrollIntoView({ behavior: 'smooth' });
+                
+                // Update guidance button
+                guidanceBtn.href = `./guidance.html?type=${analysis.type}`;
+                
+                // Speak analysis result
+                voiceAssistant.speak(`I've detected a ${analysis.type} emergency with ${severity} severity. Please follow the step by step instructions.`);
+            }
+            
+            // Auto-focus on text area
+            emergencyText.focus();
+        });
+    </script>
+</body>
+</html>
