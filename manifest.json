@@ -1,0 +1,21 @@
+{
+  "name": "Emergency AI Guidance",
+  "short_name": "EmergencyAI",
+  "description": "AI-powered emergency guidance and first aid assistance",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#dc2626",
+  "icons": [
+    {
+      "src": "./assets/icons/logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./assets/icons/logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
